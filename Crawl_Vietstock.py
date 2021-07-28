@@ -8,10 +8,11 @@ from time import sleep
 driver = webdriver.Chrome(executable_path='chromedriver.exe')
 driver.get('https://vietstock.vn/chung-khoan.htm')
 sleep(3)
-
-
+count_page = 0
 
 def Crawl_10_article():
+    global count_page
+    count_page+=1
     links = driver.find_elements_by_xpath('//h2[@class="channel-title"]/a')
     urls = []
     count = 0
@@ -27,7 +28,7 @@ def Crawl_10_article():
         count += 1
         print(count)
         driver.get(url)
-        sleep(4)
+        sleep()
         #Tìm và in tiêu đề bài báo
         tittle = driver.find_element_by_class_name('article-title')
         print(tittle.text)
@@ -36,17 +37,20 @@ def Crawl_10_article():
         print(content.text)
 
 def NextPage():
-    next_page = driver.find_element_by_xpath('/html/body/section[1]/div[2]/div/div/div[3]/div[2]/ul/li[6]')
-    next_page.click()
+    next_page = driver.find_element_by_xpath('//*[@id="page-next "]')
+    driver.execute_script("arguments[0].click();", next_page)
+    #next_page.click()
     sleep(3)
-    print('All right')
+    #print('All right')
     
 While True:
     Crawl_10_article()
     driver.get('https://vietstock.vn/chung-khoan.htm')
     sleep(3)
-    NextPage()
+    for i in range(count_page):
+        NextPage()
+    #if count_page == 3:
+        #break
 #Crawl_10_article()
-
 
 driver.close()
