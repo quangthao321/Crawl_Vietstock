@@ -37,20 +37,22 @@ def Crawl_10_article():
         print(content.text)
 
 def NextPage():
-    next_page = driver.find_element_by_xpath('//*[@id="page-next "]')
+    next_page = driver.find_element_by_xpath('//*[@id="page-next "]/a')
     driver.execute_script("arguments[0].click();", next_page)
     #next_page.click()
     sleep(3)
     #print('All right')
-    
+
+Crawl_10_article()
+sleep(3)
+
 While True:
-    Crawl_10_article()
     driver.get('https://vietstock.vn/chung-khoan.htm')
     sleep(3)
     for i in range(count_page):
         NextPage()
+    Crawl_10_article()
     #if count_page == 3:
         #break
-#Crawl_10_article()
 
 driver.close()
