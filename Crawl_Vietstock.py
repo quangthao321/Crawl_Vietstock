@@ -1,5 +1,6 @@
 from selenium import webdriver
 #from selenium.webdriver.common.by import By
+from main import ChuanHoa
 from time import sleep
 #import string
 #from selenium.webdriver.support.ui import WebDriverWait as W
@@ -31,10 +32,10 @@ def Crawl_10_article():
         sleep()
         #Tìm và in tiêu đề bài báo
         tittle = driver.find_element_by_class_name('article-title')
-        print(tittle.text)
+        ChuanHoa(tittle.text)
         #Tìm và in nội dung bài báo
         content = driver.find_element_by_xpath('/html/body/section[1]/section/div[1]/div[2]/div/div[2]/div[1]/div[2]/div[4]')
-        print(content.text)
+        ChuanHoa(content.text)
 
 def NextPage():
     next_page = driver.find_element_by_xpath('//*[@id="page-next "]/a')
