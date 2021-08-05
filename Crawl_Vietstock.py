@@ -1,9 +1,9 @@
 from selenium import webdriver
-from selenium.webdriver.common.by import By
+#from selenium.webdriver.common.by import By
 from time import sleep
 #import string
-from selenium.webdriver.support.ui import WebDriverWait as W
-from selenium.webdriver.support import expected_conditions as E
+#from selenium.webdriver.support.ui import WebDriverWait as W
+#from selenium.webdriver.support import expected_conditions as E
 
 driver = webdriver.Chrome(executable_path='chromedriver.exe')
 driver.get('https://vietstock.vn/chung-khoan.htm')
@@ -41,11 +41,12 @@ def NextPage():
     sleep(3)
     print('All right')
 
-Crawl_10_article()
-driver.get('https://vietstock.vn/chung-khoan.htm')
-sleep(3)
-NextPage()
-Crawl_10_article()
+While True:
+	Crawl_10_article()
+	driver.get('https://vietstock.vn/chung-khoan.htm')
+	sleep(3)
+	NextPage()
+#Crawl_10_article()
 
 
 driver.close()
