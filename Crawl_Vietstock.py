@@ -15,37 +15,33 @@ sleep(3)
 
 count_page = 0
 count_id = 0
-
+urls = []
 def Crawl_10_article():
     global count_page
     count_page+=1
     links = driver.find_elements_by_xpath('//h2[@class="channel-title"]/a')
-    urls = []
+
 
     #get 10 urls
     for link in links:
         #print(link.text)
         url = link.get_attribute("href")
         #print(url)
-<<<<<<< HEAD
         if url not in urls:
             urls.append(url)
+    return urls
 
-=======
-        urls.append(url)
-        
->>>>>>> be4455e1fbf109a4d0e396cf1eda438ebe5232ae
+def write_csv():
     with open('Vietstock.csv', 'w', encoding='utf-8', newline='') as file_output:
         headers = ['id', 'tittle', 'content']
         writer = csv.DictWriter(file_output, delimiter=',', lineterminator='\n', fieldnames=headers)
         writer.writeheader()
+        count_id = 0
         #10 urls in 1 page
-<<<<<<< HEAD
         for url in urls:
-            global count_id
-            count_id += 1
+            count_id+=1
             driver.get(url)
-            sleep(4)
+            sleep(3)
             # Tìm và in tiêu đề bài báo
             tittle = driver.find_element_by_class_name('article-title')
             # list1 = ChuanHoa(tittle.text)
@@ -56,32 +52,16 @@ def Crawl_10_article():
             list_content = []
             list_tittle.append(tittle.text)
             list_content.append(content.text)
-            sleep(3)
+            sleep(2)
 
             writer.writerow({headers[0]:count_id, headers[1]:list_tittle, headers[2]:list_content})
-=======
-    #10 urls in 1 page
-        for url in urls:
-            count += 1
-            print(count)
-            driver.get(url)
-            sleep(4)
-            #Tìm và in tiêu đề bài báo
-            tittle = driver.find_element_by_class_name('article-title')
-            ChuanHoa(tittle.text)
-            #Tìm và in nội dung bài báo
-            content = driver.find_element_by_xpath('/html/body/section[1]/section/div[1]/div[2]/div/div[2]/div[1]/div[2]/div[4]')
-            ChuanHoa(content.text)
-            sleep(3)
->>>>>>> be4455e1fbf109a4d0e396cf1eda438ebe5232ae
 
-            writer.writerow({headers[0]:count_id, headers[1]:list_tittle, headers[2]:list_content})
 def NextPage():
     driver.execute_script('window.scrollTo(0,document.body.scollHeight)')
     next_page = driver.find_element_by_xpath('//*[@id="page-next "]/a')
     driver.execute_script("arguments[0].click();", next_page)
     sleep(3)
-    print('All right')
+    #print('All right')
 
 
 Crawl_10_article()
@@ -93,7 +73,8 @@ while True:
     for i in range(0,count_page):
         NextPage()
     Crawl_10_article()
-    if count_page == 100:
+    if count_page == 50:
         break
+    write_csv()
 
 driver.close()
