@@ -5,7 +5,7 @@ from mysql.connector import Error
 db = {
     'host' : 'localhost',
     'user' : 'root',
-    'database' : 'cafe_sql',
+    'database' : 'vietstock',
     'password' : ''
 }
 
@@ -18,12 +18,13 @@ def conn(db):
             print('Connect to mySQL database')
         data = []
         mycursor = conn.cursor()
-        sql = "INSERT INTO data (id, source, title, created_at) VALUES (%s, %s, %s ,%s)"
-        with open("GFG.csv") as my_file:
+        sql = "INSERT INTO datasql (id, tiltle, content) VALUES (%s, %s ,%s)"
+        with open("Vietstock.csv") as my_file:
             csv_reader = csv.reader(my_file, delimiter=',')
             next(csv_reader)
             for row in csv_reader:
-                data.append(tuple(row))
+                # data.append(tuple(row))
+                data.append(tuple((row[0], row[1].strip("[']\""),row[2].strip("[']\""))))
         mycursor.executemany(sql, data)
     except Error as e:
         print(e)
