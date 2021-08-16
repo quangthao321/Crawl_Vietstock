@@ -1,6 +1,7 @@
 #str = 'Cô gái 26 tuổi bỏ việc lương cao ở big 4 kiểm'
 
 def ChuanHoa(str):
+    str1 = ''
     line = []
     index = -1
     print(len(str))
@@ -18,6 +19,7 @@ def ChuanHoa(str):
     line.append(str[index:])
 
     for j in range(len(line)):
-        print(line[j])
+        str1 = str1 + line[j] + '\n'
+    return(str1)
 
 #ChuanHoa(str)
